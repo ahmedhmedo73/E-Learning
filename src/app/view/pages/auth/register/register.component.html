@@ -1,1 +1,93 @@
-<p>register works!</p>
+<main>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md-5 position-relative">
+        <h2>
+          It's easy to learn <br />
+          English. <br />
+          Regsiter Now for Free...
+        </h2>
+        <form
+          class="form-signin align-items-center d-flex flex-column justify-content-center"
+          [formGroup]="sign_up_form"
+        >
+          <div class="form-floating w-100">
+            <input
+              type="text"
+              class="form-control top-input"
+              id="floatingInput"
+              placeholder="Ahmed Kamel"
+              name="name"
+              formControlName="name"
+            />
+            <label for="floatingInput">Name</label>
+          </div>
+          <div class="form-floating w-100">
+            <input
+              type="email"
+              class="form-control top-input"
+              id="floatingInput"
+              placeholder="name@example.com"
+              name="email"
+              formControlName="email"
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+
+          <div class="form-floating w-100">
+            <input
+              type="password"
+              class="form-control bottom-input"
+              id="floatingPassword"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <div class="form-floating w-100">
+            <input
+              type="password"
+              class="form-control bottom-input"
+              id="floatingPassword"
+              placeholder="Confirm Password"
+              formControlName="confirmPassword"
+            />
+            <label for="floatingPassword">Confirm Password</label>
+          </div>
+
+          <button
+            class="w-100 btn btn-lg mt-3"
+            type="button"
+            (click)="sign_up()"
+            [disabled]="sign_up_form.invalid"
+          >
+            Register
+          </button>
+          <a
+            href="#"
+            routerLink="/login"
+            class="fw-bold mt-3 text-capitalize text-decoration-none text-decoration-underline text-muted sign-up-btn"
+            >Already have account? log in</a
+          >
+
+          <div
+            *ngIf="alert_message"
+            class="toast align-items-center text-white bg-success border-0 d-flex mt-3"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="d-flex justify-content-center w-100">
+              <div class="toast-body text-center">Account Created! ⭐</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <img src="./../../../../../assets/login/1.PNG" alt="" />
+      </div>
+    </div>
+  </div>
+</main>

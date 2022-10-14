@@ -1,12 +1,35 @@
-<div class="row" style="margin-right: 0">
-  <div class="col-md-12 border border-dark">
-    <div class="row">
-      <div class="col-md-12 d-flex justify-content-between stats">
-        <div class="col-md-6 d-flex">
-          <i class="fa-solid fa-bars me-2"></i>
-          <p>Stats</p>
-        </div>
-      </div>
+<div class="row border bg-white" style="margin-right: 0">
+  <div class="col-12 d-flex box-shadow-bottom justify-content-between stats pb-3">
+    <div class="col-md-6 d-flex">
+      <i class="fa-solid fa-chart-line me-2"></i>
+      <p>Stats</p>
     </div>
+  </div>
+  <div
+    class="col-12 stats-table-header-container box-shadow-bottom d-flex justify-content-evenly py-2"
+  >
+    <div class="stats-table-header  d-flex justify-content-center">
+      <p class="fw-bold fs-5">Date</p>
+    </div>
+    <div class="stats-table-header d-flex justify-content-center">
+      <p class="fw-bold fs-5">Total</p>
+    </div>
+    <div class="stats-table-header d-flex gap-1 align-items-center justify-content-center">
+      <i class="fa-solid fa-check text-success fs-6 h-50"></i>
+      <p class="fw-bold fs-5">Success</p>
+    </div>
+    <div class="stats-table-header d-flex gap-1 align-items-center justify-content-center">
+      <i class="fa-solid fa-x text-danger fs-6 h-50"></i>
+      <p class="fw-bold fs-5">Fail</p>
+    </div>
+  </div>
+  <div
+    class="col-12 stats-table-cotent-container box-shadow-bottom d-flex justify-content-evenly py-2"
+    *ngFor="let stat of stats"
+  >
+    <div class="stats-table-cotent stats-table-cotent-date d-flex justify-content-center"><p>{{stat.date}}</p></div>
+    <div class="stats-table-cotent stats-table-cotent-total d-flex justify-content-center"><p>{{stat.total}}</p></div>
+    <div class="stats-table-cotent stats-table-cotent-success d-flex justify-content-center"><p>{{stat.success}}</p></div>
+    <div class="stats-table-cotent stats-table-cotent-fail d-flex justify-content-center"><p>{{stat.fail}}</p></div>
   </div>
 </div>

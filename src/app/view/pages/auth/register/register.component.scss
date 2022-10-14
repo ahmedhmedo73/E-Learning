@@ -43,3 +43,12 @@ button {
   background-color: rgb(26, 140, 216);
   color: white;
 }
+.btn {
+  background-color: #de1f26;
+  color: white;
+  margin-top: 30px;
+  &:hover {
+    background-color: white;
+    color: #de1f26;
+  }
+}

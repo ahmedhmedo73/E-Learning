@@ -1,15 +1,49 @@
+import { getScore } from './../../../core/store/selectors/score.selector';
 import { Component, OnInit } from '@angular/core';
-
+import { select, Store } from '@ngrx/store';
+import { AuthService } from '../../pages/auth/providers/auth.service';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  score: number = 0;
+  showPlaymode: boolean = false;
+  isLogin: boolean | undefined;
+  constructor(
+    private store: Store<{ score: number }>,
+    private _AuthService: AuthService,
+    private router: Router
+  ) {
+    this.store
+      .pipe(select(getScore()))
+      .subscribe((data) => (this.score = data));
+    this._AuthService.currentUser.subscribe(() => {
+      if (this._AuthService.currentUser.getValue() != null) {
+        this.isLogin = true;
+      } else {
+        this.isLogin = true;
+      }
+    });
   }
 
+  ngOnInit(): void {}
+  stylePlayMode() {
+    if (this.showPlaymode)
+      return {
+        opacity: '1',
+        transform: 'translate3d(0, 0, 0)',
+      };
+    return {
+      opacity: '0',
+      'z-index': '-1',
+      transform: 'translate3d(-10%, 0, 0)',
+    };
+  }
+  signOut() {
+    this.router.navigate(['/login']);
+  }
 }

@@ -8,62 +8,76 @@
           Regsiter Now for Free...
         </h2>
         <form
-          class="form-signin align-items-center d-flex flex-column justify-content-center"
-          [formGroup]="sign_up_form"
+          class="form-signin align-items-center d-flex flex-column justify-content-center mt-3"
+          [formGroup]="registerForm"
+          (ngSubmit)="register(registerForm)"
         >
           <div class="form-floating w-100">
-            <input
-              type="text"
-              class="form-control top-input"
-              id="floatingInput"
-              placeholder="Ahmed Kamel"
-              name="name"
-              formControlName="name"
-            />
-            <label for="floatingInput">Name</label>
+            <div class="col-md-12 my-1">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+              />
+            </div>
           </div>
           <div class="form-floating w-100">
-            <input
-              type="email"
-              class="form-control top-input"
-              id="floatingInput"
-              placeholder="name@example.com"
-              name="email"
-              formControlName="email"
-            />
-            <label for="floatingInput">Email address</label>
+            <div class="col-md-12 my-1">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                id="email"
+                class="form-control"
+                formControlName="email"
+              />
+            </div>
           </div>
 
-          <div class="form-floating w-100">
-            <input
-              type="password"
-              class="form-control bottom-input"
-              id="floatingPassword"
-              placeholder="Password"
-              formControlName="password"
-            />
-            <label for="floatingPassword">Password</label>
-          </div>
+          <div class="div w-100" formGroupName="passwords">
+            <div class="form-floating w-100">
+              <div class="col-md-12 my-1">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  formControlName="password"
+                />
+              </div>
+            </div>
 
-          <div class="form-floating w-100">
-            <input
-              type="password"
-              class="form-control bottom-input"
-              id="floatingPassword"
-              placeholder="Confirm Password"
-              formControlName="confirmPassword"
-            />
-            <label for="floatingPassword">Confirm Password</label>
+            <div class="form-floating w-100">
+              <div class="col-md-12 my-1">
+                <label for="confirmPassword" class="form-label"
+                  >Confirm Password</label
+                >
+                <input
+                  type="password"
+                  formControlName="confirm_password"
+                  id="confirmPassword"
+                  class="form-control"
+                />
+              </div>
+            </div>
           </div>
-
-          <button
-            class="w-100 btn btn-lg mt-3"
-            type="button"
-            (click)="sign_up()"
-            [disabled]="sign_up_form.invalid"
+          <div
+            style="color: #ff7355"
+            *ngIf="
+              registerForm.get(['passwords', 'password'])?.value !=
+                registerForm.get(['passwords', 'confirm_password'])?.value &&
+              registerForm.get(['passwords', 'confirm_password'])?.value != null
+            "
           >
-            Register
-          </button>
+            Password does not match
+          </div>
+          <input
+            class="w-100 btn btn-lg mt-3"
+            type="submit"
+            [disabled]="false"
+            value="Register"
+          />
           <a
             href="#"
             routerLink="/login"

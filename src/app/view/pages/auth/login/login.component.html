@@ -8,27 +8,28 @@
         </h2>
         <form
           class="form-signin align-items-center d-flex flex-column justify-content-center"
-          [formGroup]="sign_in_form"
+          [formGroup]="loginForm"
+          (ngSubmit)="login(loginForm)"
         >
           <div class="form-floating w-100">
-            <input
-              type="email"
-              class="form-control top-input"
-              id="floatingInput"
-              placeholder="name@example.com"
-              name="email"
-              formControlName="email"
-            />
-            <label for="floatingInput">Email address</label>
+            <div class="col-md-12 my-2">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+              />
+            </div>
           </div>
 
           <div
-            *ngIf="sign_in_form.get('email')?.invalid && sign_in_form.touched"
+            *ngIf="loginForm.get('email')?.invalid && loginForm.touched"
             class="w-100 ps-1 mt-2"
           >
             <p class="error-message">
               {{
-                sign_in_form.get("email")?.hasError("required")
+                loginForm.get("email")?.hasError("required")
                   ? "email is empty"
                   : "email is invalid"
               }}
@@ -36,43 +37,45 @@
           </div>
 
           <div class="form-floating w-100">
-            <input
-              type="password"
-              class="form-control bottom-input"
-              id="floatingPassword"
-              placeholder="Password"
-              formControlName="password"
-            />
-            <label for="floatingPassword">Password</label>
+            <div class="col-md-12 my-2">
+              <label for="password" class="form-label">password</label>
+              <input
+                formControlName="password"
+                type="password"
+                id="password"
+                class="form-control"
+              />
+            </div>
           </div>
 
           <div
-            *ngIf="
-              sign_in_form.get('password')?.invalid && sign_in_form.touched
-            "
+            *ngIf="loginForm.get('password')?.invalid && loginForm.touched"
             class="w-100 ps-1 mt-2"
           >
             <p class="error-message">
               {{
-                sign_in_form.get("password")?.hasError("required")
+                loginForm.get("password")?.hasError("required")
                   ? "password is empty"
                   : "password must be more than 6 digits"
               }}
             </p>
           </div>
 
-          <button
-            class="w-100 btn btn-lg mt-3"
-            type="button"
-            (click)="sign_in()"
-            [disabled]="sign_in_form.invalid"
-          >
-            Login
-          </button>
+          <div *ngIf="error" class="w-100 ps-1 mt-2">
+            <p class="error-message">
+              {{ error }}
+            </p>
+          </div>
+          <input
+            class="w-100 btn"
+            type="submit"
+            [disabled]="loginForm.invalid"
+            value="Login"
+          />
           <a
             href="#"
             routerLink="/register"
-            class="fw-bold mt-3 text-capitalize text-decoration-none text-decoration-underline text-muted sign-up-btn"
+            class="fw-bold mt-3 text-capitalize text-decoration-none text-decoration-underline text-muted"
             >Don't have account? register</a
           >
 
@@ -93,7 +96,7 @@
       </div>
       <div class="col-md-2"></div>
       <div class="col-md-5">
-        <img src="./../../../../../assets/login/1.PNG" alt="" />
+        <img src="assets/login/1.PNG" alt="" />
       </div>
     </div>
   </div>

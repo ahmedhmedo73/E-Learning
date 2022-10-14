@@ -1,0 +1,114 @@
+<div class="container my-3">
+  <div class="row">
+    <div class="col-md-12 main position-relative">
+      <video>
+        <source src="assets/videos/mov_bbb.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay position-absolute h-100">
+        <a (click)="startVideo('.play')" class="play" *ngIf="!played">
+          <i class="fa-solid fa-circle-play"></i>
+        </a>
+        <a (click)="startVideo('.retry')" class="retry" *ngIf="played">
+          <i class="fas fa-redo"></i>
+          <div class="score d-flex justify-content-center position-absolute">
+            <i class="fa-solid fa-plus"></i>
+            <span>{{ score }}</span>
+          </div>
+          <div
+            class="next"
+            *ngIf="speakingAnswer != -1 && mcqAnswer != -1"
+            appClickStopPropagation
+          >
+            <i class="fa-solid fa-forward-step"></i>
+          </div>
+          <div class="qustions d-flex justify-content-around w-75">
+            <div class="qustion speeking position-relative d-flex">
+              <i class="fa-solid fa-microphone"></i>
+              <p appClickStopPropagation (click)="checkSpeakingAnswer()">
+                Repeat Audio
+              </p>
+              <ng-container>
+                <div
+                  class="correct position-absolute"
+                  *ngIf="speakingAnswer == 1"
+                  appClickStopPropagation
+                >
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <div
+                  class="wrong position-absolute"
+                  *ngIf="speakingAnswer == 0"
+                  appClickStopPropagation
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </ng-container>
+            </div>
+            <div class="qustion mcq position-relative">
+              <p (click)="showQuestion = true" appClickStopPropagation>
+                Choose The Correct Answer
+              </p>
+              <ng-container>
+                <div
+                  class="correct position-absolute"
+                  *ngIf="mcqAnswer == 1"
+                  appClickStopPropagation
+                >
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <div
+                  class="wrong position-absolute"
+                  *ngIf="mcqAnswer == 0"
+                  appClickStopPropagation
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </ng-container>
+              <div class="content" *ngIf="showQuestion">
+                <h3>What was the color of the flowers ?</h3>
+                <div class="choises row w-100">
+                  <div class="choise col-md-6 mb-3">
+                    <p (click)="checkMcqAnswer('a')" appClickStopPropagation>
+                      A) <span>Purple</span>
+                    </p>
+                  </div>
+                  <div class="choise col-md-6">
+                    <p (click)="checkMcqAnswer('b')" appClickStopPropagation>
+                      B) <span>White</span>
+                    </p>
+                  </div>
+                  <div class="choise col-md-6">
+                    <p (click)="checkMcqAnswer('c')" appClickStopPropagation>
+                      C) <span>Red</span>
+                    </p>
+                  </div>
+                  <div class="choise col-md-6">
+                    <p (click)="checkMcqAnswer('d')" appClickStopPropagation>
+                      D) <span>Yellow</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="bottom col-md-12 d-flex justify-content-between">
+      <div class="left">
+        <h3>Video name</h3>
+        <p><span>2,210,154 </span> views</p>
+      </div>
+      <div class="right d-flex">
+        <div class="features d-flex">
+          <img src="assets/icons/addtolist.png" alt="" />
+          <p>add to list</p>
+        </div>
+        <div class="features d-flex">
+          <i class="fa-solid fa-share-nodes"></i>
+          <p>share</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../providers/auth.service';
 // import { StatusService } from 'src/app/services/status.service';
 // import { UserService } from 'src/app/services/user.service';
 
@@ -10,41 +11,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  // VARIABLES
-  sign_in_form!: FormGroup;
+  loginForm!: FormGroup;
   alert_message: string = '';
   alert_message_status: boolean = false;
+  error: any;
 
-  // FUNCTIONS
   constructor(
-    // private statusS: StatusService,
     private fb: FormBuilder,
-    // private userS: UserService,
-    private router: Router
+    private router: Router,
+    private _AuthService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // SET HEADER AND FOOTER DISPLAY
-    // this.statusS.set_header_footer_status(false);
-
-    // CONFIGURE THE FORM
-    this.sign_in_form = this.fb.group({
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-
-    // AUTO-LOGGING WHEN SIGNED IN
-    // if (this.userS.get_signed_in()) {
-    //   this.router.navigate(['/home']);
-    // }
   }
 
   sign_in() {
     console.log('signed in!');
-    console.log(this.sign_in_form);
+    console.log(this.loginForm);
 
     // SIGN IN
-    // let sign_in_status = this.userS.sign_in(this.sign_in_form.value);
+    // let sign_in_status = this.userS.sign_in(this.loginForm.value);
     let sign_in_status = '200';
 
     if (sign_in_status == '200') {
@@ -59,7 +49,19 @@ export class LoginComponent implements OnInit {
       }, 2000);
 
       // RESET FORM
-      this.sign_in_form.reset();
+      this.loginForm.reset();
     }
+  }
+  login(loginform: FormGroup) {
+    this._AuthService.login(loginform.value).subscribe((response) => {
+      if (response.message == 'success') {
+        localStorage.setItem('token', response.token);
+        this._AuthService.saveCurrentUser();
+        this._AuthService.isLogin = true;
+        this.router.navigate(['/home']);
+      } else {
+        this.error = response.message;
+      }
+    });
   }
 }

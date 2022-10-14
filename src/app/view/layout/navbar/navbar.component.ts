@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AuthService } from '../../pages/auth/providers/auth.service';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -28,6 +28,12 @@ export class NavbarComponent implements OnInit {
         this.isLogin = true;
       }
     });
+
+    this.router.events.subscribe(data => {
+      if(data instanceof NavigationStart){
+        this.showPlaymode = false;
+      }
+    })
   }
 
   ngOnInit(): void {}

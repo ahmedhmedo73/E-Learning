@@ -12,7 +12,7 @@ export class AuthService {
   isLogin: boolean | undefined;
 
   constructor(private _HttpClient: HttpClient, private _Router: Router) {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') && localStorage.getItem('token') != null) {
       this.saveCurrentUser();
     }
   }

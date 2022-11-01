@@ -22,7 +22,7 @@ export class AuthService {
   }
   register(formData: any): Observable<any> {
     return this._HttpClient.post(
-      'https://route-egypt-api.herokuapp.com/signup',
+      'https://localhost:7189/User/CreateUser',
       formData
     );
   }

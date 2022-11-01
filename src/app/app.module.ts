@@ -17,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { scoreReducer } from './core/store/reducers/score.reducer';
 import { StarterComponent } from './view/pages/starter/starter.component';
 import { AboutUsComponent } from './view/pages/about-us/about-us.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AboutUsComponent } from './view/pages/about-us/about-us.component';
       score: scoreReducer,
     }),
     HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

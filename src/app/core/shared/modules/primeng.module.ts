@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [],
-  exports: [],
+  exports: [DialogModule, DropdownModule],
 })
 export class PrimengModule {}

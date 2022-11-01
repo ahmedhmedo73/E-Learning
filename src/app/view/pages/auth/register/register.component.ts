@@ -32,15 +32,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
+      Fname: ['', [Validators.required]],
+      Lname: ['', [Validators.required]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      repassword: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      age: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      passwords: this.fb.group(
-        {
-          password: ['', [Validators.required]],
-          confirm_password: ['', [Validators.required]],
-        },
-        { validator: this.passwordConfirming }
-      ),
     });
   }
   passwordConfirming(c: AbstractControl): ValidationErrors | null {
@@ -49,10 +48,18 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
-  register(registerForm: FormGroup) {
-    
-    console.log(registerForm);
-    this._AuthService.register(registerForm.value).subscribe((response) => {
+  register() {
+    const formData = new FormData(); 
+    formData.append('Fname', this.registerForm.controls['Fname'].value);
+    formData.append('Lname', this.registerForm.controls['Lname'].value);
+    formData.append('username', this.registerForm.controls['username'].value);
+    formData.append('password', this.registerForm.controls['password'].value);
+    formData.append('repassword', this.registerForm.controls['repassword'].value);
+    formData.append('age', this.registerForm.controls['age'].value);
+    formData.append('gender', this.registerForm.controls['gender'].value);
+    formData.append('email', this.registerForm.controls['email'].value);
+
+    this._AuthService.register(formData).subscribe((response) => {
       if (response.message == 'success') {
         this._Router.navigate(['/login']);
       } else {

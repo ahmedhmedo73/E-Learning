@@ -10,33 +10,55 @@
         <form
           class="form-signin align-items-center d-flex flex-column justify-content-center mt-3"
           [formGroup]="registerForm"
-          (ngSubmit)="register(registerForm)"
+          (ngSubmit)="register()"
         >
-          <div class="form-floating w-100">
-            <div class="col-md-12 my-1">
-              <label for="name" class="form-label">Name</label>
-              <input
-                type="text"
-                id="name"
-                class="form-control"
-                formControlName="name"
-              />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="Fname"
+                />
+              </div>
             </div>
-          </div>
-          <div class="form-floating w-100">
-            <div class="col-md-12 my-1">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="text"
-                id="email"
-                class="form-control"
-                formControlName="email"
-              />
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="Lname"
+                />
+              </div>
             </div>
-          </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">UserName</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="username"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="email" class="form-label">email</label>
+                <input
+                  type="text"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+            </div>
 
-          <div class="div w-100" formGroupName="passwords">
-            <div class="form-floating w-100">
+            <div class="col-md-6">
               <div class="col-md-12 my-1">
                 <label for="password" class="form-label">Password</label>
                 <input
@@ -48,21 +70,43 @@
               </div>
             </div>
 
-            <div class="form-floating w-100">
+            <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="confirmPassword" class="form-label"
-                  >Confirm Password</label
-                >
+                <label for="password" class="form-label">re password</label>
                 <input
                   type="password"
-                  formControlName="confirm_password"
-                  id="confirmPassword"
+                  id="repassword"
                   class="form-control"
+                  formControlName="repassword"
                 />
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="age" class="form-label">age</label>
+                <input
+                  type="text"
+                  id="age"
+                  class="form-control"
+                  formControlName="age"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="gender" class="form-label">gender</label>
+                <input
+                  type="text"
+                  id="gender"
+                  class="form-control"
+                  formControlName="gender"
+                />
+              </div>
+            </div>
+
           </div>
-          <div
+          <!-- <div
             style="color: #ff7355"
             *ngIf="
               registerForm.get(['passwords', 'password'])?.value !=
@@ -71,7 +115,7 @@
             "
           >
             Password does not match
-          </div>
+          </div> -->
           <input
             class="w-100 btn btn-lg mt-3"
             type="submit"

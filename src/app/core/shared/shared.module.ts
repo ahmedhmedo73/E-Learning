@@ -14,9 +14,9 @@ import { PrimengModule } from './modules/primeng.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
   ],
   exports: [
+    RouterModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

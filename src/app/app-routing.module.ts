@@ -24,6 +24,13 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./view/pages/admin/admin.module').then(
+        (m) => m.AdminModule
+      ),
+  },
   { path: '**', component: NotfoundComponent },
 ];
 

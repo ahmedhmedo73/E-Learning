@@ -28,6 +28,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 @NgModule({
   declarations: [],
+  imports: [NzModalModule],
   exports: [
     NzFormModule,
     NzInputModule,

@@ -12,3 +12,14 @@
 .add-video {
   width: 200px;
 }
+
+.correct-answer {
+  background-color: rgb(80, 236, 80);
+  color: white;
+  border-radius: 3px;
+}
+
+.questions-container {
+  overflow-y: auto;
+  height: 70vh;
+}

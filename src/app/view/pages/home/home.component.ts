@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { environment } from 'src/app/core/environments/environment';
 import { changeScore } from 'src/app/core/store/actions/score.actions';
+import { AdminService } from '../admin/providers/admin.service';
 declare let $: any;
 @Component({
   selector: 'app-home',
@@ -13,9 +15,22 @@ export class HomeComponent implements OnInit {
   speakingAnswer: number = -1;
   mcqAnswer: number = -1;
   score: number = 0;
-  constructor(private store: Store<{ score: number }>) {}
+  video : any;
+  questions : any;
+  sentences : any;
+  URL : string = environment.videoPath;
 
-  ngOnInit(): void {}
+  constructor(private store: Store, private adminService : AdminService) {}
+
+  ngOnInit(): void {
+    this.adminService.GetVideo(6).subscribe({
+      next : (data : any) => {
+        this.video = data;
+        this.questions = data.questions.$values;
+        this.sentences = data.spokenSentences.$values;
+      }
+    })
+  }
 
   startVideo(status: string) {
     $('video').get(0).play();

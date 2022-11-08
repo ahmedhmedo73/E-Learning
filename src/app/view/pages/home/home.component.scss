@@ -1,5 +1,6 @@
 video {
   width: 100%;
+  height: 500px;
 }
 .features {
   width: 140px;
@@ -29,7 +30,7 @@ video {
   left: 160px;
   right: 160px;
 }
-.main {
+.main ,.questions ,.speeking{
   padding: 0px 160px;
 }
 .retry,
@@ -82,16 +83,9 @@ video {
 }
 .mcq {
   position: relative;
-  .content {
-    position: absolute;
-    width: 770px;
-    height: 170px;
-    top: -200px;
-    left: -430px;
-    color: black;
-    background: white;
-    padding: 10px 100px;
-  }
+}
+.content,.qustion {
+  background: lightgoldenrodyellow;
 }
 .choise {
   display: flex;

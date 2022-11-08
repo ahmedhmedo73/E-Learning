@@ -10,16 +10,20 @@ import { AdminService } from '../providers/admin.service';
 })
 export class VideosComponent implements OnInit {
   showQuistionsModal: boolean = false;
-  showVideoModal: boolean = false;
   showAddQuistionModal: boolean = false;
+  showSentencesModal: boolean = false;
+  showAddSentenceModal: boolean = false;
+  showAddVideoModal: boolean = false;
   videoForm!: FormGroup;
   quistionForm!: FormGroup;
-  selectedVideoIndex!: number;
+  sentenceForm!: FormGroup;
   selectedVideoId!: number;
   video!: File;
   videos!: any;
   currentSectionPage!: string;
   selectedQuistionsList: any;
+  sentences: any;
+  questions: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,13 +46,17 @@ export class VideosComponent implements OnInit {
       CorrectAnswer: ['', Validators.required],
     });
 
+    this.sentenceForm = this.formBuilder.group({
+      Sentence: ['', Validators.required],
+    });
+
     this.currentSectionPage =
       this.activatedRoute.snapshot.paramMap.get('sectionName') || '';
     this.getVideos();
   }
 
   getVideos() {
-    this.adminService.GetVideo(this.currentSectionPage).subscribe({
+    this.adminService.GetVideos(this.currentSectionPage).subscribe({
       next: (data: any) => {
         this.videos = data.$values;
       },
@@ -65,7 +73,7 @@ export class VideosComponent implements OnInit {
       next: (data) => {},
       error: (data) => {
         this.getVideos();
-        this.showVideoModal = false;
+        this.showAddVideoModal = false;
       },
     });
   }
@@ -81,13 +89,27 @@ export class VideosComponent implements OnInit {
       'CorrectAnswer',
       this.quistionForm.controls['CorrectAnswer'].value
     );
-    console.log(this.selectedVideoId);
-    
     formData.append('Vid', this.selectedVideoId.toString());
 
     this.adminService.AddQuistion(formData).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: (data) => {},
+      error: (err) => {
+        this.showAddQuistionModal = false;
+        this.openQuistionsModal(this.selectedVideoId);
+      },
+    });
+  }
+
+  addSentence() {
+    const formData = new FormData();
+    formData.append('Sentence', this.sentenceForm.controls['Sentence'].value);
+    formData.append('Vid', this.selectedVideoId.toString());
+
+    this.adminService.AddSentence(formData).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        this.showAddSentenceModal = false;
+        this.openSentencesModal(this.selectedVideoId);
       },
     });
   }
@@ -101,6 +123,41 @@ export class VideosComponent implements OnInit {
       next: (data) => {},
       error: (err) => {
         this.getVideos();
+      },
+    });
+  }
+
+  openSentencesModal(id: number) {
+    this.showSentencesModal = true;
+    this.selectedVideoId = id;
+    this.adminService.GetVideo(id).subscribe({
+      next: (data: any) => {
+        this.sentences = data.spokenSentences.$values;
+      },
+    });
+  }
+  openQuistionsModal(id: any) {
+    this.showQuistionsModal = true;
+    this.selectedVideoId = id;
+    this.adminService.GetVideo(id).subscribe({
+      next: (data: any) => {
+        this.questions = data.questions.$values;
+      },
+    });
+  }
+  deleteQuestion(id: any) {
+    this.adminService.DeleteQuestion(id).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        this.openQuistionsModal(this.selectedVideoId)
+      },
+    });
+  }
+  deleteSentence(id: any) {
+    this.adminService.DeleteSentence(id).subscribe({
+      next: (data) => {},
+      error: (err) => {
+        this.openSentencesModal(this.selectedVideoId)
       },
     });
   }

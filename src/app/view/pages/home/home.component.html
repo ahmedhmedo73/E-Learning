@@ -10,93 +10,12 @@
         </a>
         <a (click)="startVideo('.retry')" class="retry" *ngIf="played">
           <i class="fas fa-redo"></i>
-          <div class="score d-flex justify-content-center position-absolute">
-            <i class="fa-solid fa-plus"></i>
-            <span>{{ score }}</span>
-          </div>
-          <div
-            class="next"
-            *ngIf="speakingAnswer != -1 && mcqAnswer != -1"
-            appClickStopPropagation
-          >
-            <i class="fa-solid fa-forward-step"></i>
-          </div>
-          <div class="qustions d-flex justify-content-around w-75">
-            <div class="qustion speeking position-relative d-flex">
-              <i class="fa-solid fa-microphone"></i>
-              <p appClickStopPropagation (click)="checkSpeakingAnswer()">
-                Repeat Audio
-              </p>
-              <ng-container>
-                <div
-                  class="correct position-absolute"
-                  *ngIf="speakingAnswer == 1"
-                  appClickStopPropagation
-                >
-                  <i class="fa-solid fa-check"></i>
-                </div>
-                <div
-                  class="wrong position-absolute"
-                  *ngIf="speakingAnswer == 0"
-                  appClickStopPropagation
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </div>
-              </ng-container>
-            </div>
-            <div class="qustion mcq position-relative">
-              <p (click)="showQuestion = true" appClickStopPropagation>
-                Choose The Correct Answer
-              </p>
-              <ng-container>
-                <div
-                  class="correct position-absolute"
-                  *ngIf="mcqAnswer == 1"
-                  appClickStopPropagation
-                >
-                  <i class="fa-solid fa-check"></i>
-                </div>
-                <div
-                  class="wrong position-absolute"
-                  *ngIf="mcqAnswer == 0"
-                  appClickStopPropagation
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </div>
-              </ng-container>
-              <div class="content" *ngIf="showQuestion">
-                <h3>What was the color of the flowers ?</h3>
-                <div class="choises row w-100">
-                  <div class="choise col-md-6 mb-3">
-                    <p (click)="checkMcqAnswer('a')" appClickStopPropagation>
-                      A) <span>Purple</span>
-                    </p>
-                  </div>
-                  <div class="choise col-md-6">
-                    <p (click)="checkMcqAnswer('b')" appClickStopPropagation>
-                      B) <span>White</span>
-                    </p>
-                  </div>
-                  <div class="choise col-md-6">
-                    <p (click)="checkMcqAnswer('c')" appClickStopPropagation>
-                      C) <span>Red</span>
-                    </p>
-                  </div>
-                  <div class="choise col-md-6">
-                    <p (click)="checkMcqAnswer('d')" appClickStopPropagation>
-                      D) <span>Yellow</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </a>
       </div>
     </div>
     <div class="bottom col-md-12 d-flex justify-content-between">
       <div class="left">
-        <h3>Video name</h3>
+        <h3>{{ video?.name }}</h3>
         <p><span>2,210,154 </span> views</p>
       </div>
       <div class="right d-flex">
@@ -110,5 +29,56 @@
         </div>
       </div>
     </div>
+
+    <ng-container *ngIf="played">
+      <div class="col-md-12 questions">
+        <h2>Questions</h2>
+        <div
+          class="content my-3 p-3 rounded-1"
+          *ngFor="let question of questions"
+        >
+          <h3>{{ question.question }}</h3>
+          <div class="choises row w-100">
+            <div class="choise col-md-6 mb-3">
+              <a (click)="checkMcqAnswer('a')" appClickStopPropagation>
+                A) <span>{{ question.answer1 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a (click)="checkMcqAnswer('b')" appClickStopPropagation>
+                B) <span>{{ question.answer2 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a (click)="checkMcqAnswer('c')" appClickStopPropagation>
+                C) <span>{{ question.answer3 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a (click)="checkMcqAnswer('d')" appClickStopPropagation>
+                D) <span>{{ question.answer4 }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 speeking mb-3">
+        <h2>Speaking test</h2>
+        <p class="text-secondary fs-12">
+          test your speaking skill by clicking the mic and say the sentence
+        </p>
+      </div>
+
+      <div
+        class="col-md-12 qustion speeking position-relative d-flex justify-content-between my-3 rounded-1"
+        *ngFor="let sentence of sentences"
+      >
+        <p appClickStopPropagation (click)="checkSpeakingAnswer()">
+          {{ sentence.sentence }}
+        </p>
+        <i class="fa-solid fa-microphone"></i>
+      </div>
+    </ng-container>
   </div>
 </div>

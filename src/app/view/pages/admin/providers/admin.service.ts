@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/app/core/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,27 +15,56 @@ export class AdminService {
 
   AddVideo(formData: any) {
     return this._HttpClient.post(
-      'https://localhost:7189/VidAdmin/uploadvideo',
+      environment.endpoint + 'VidAdmin/uploadvideo',
       formData
     );
   }
 
-  GetVideo(section: string) {
+  GetVideos(section: string) {
     return this._HttpClient.get(
-      'https://localhost:7189/Section/GitVideo?name=' + section
+      environment.endpoint + 'Section/GitVideo?name=' + section
     );
   }
 
+  GetVideo(id: any) {
+    return this._HttpClient.get(
+      environment.endpoint + 'VidUser/GetVideo?id=' + id
+    );
+  }
   AddQuistion(formData: any) {
     return this._HttpClient.post(
-      'https://localhost:7189/Question/SetQuestion',
+      environment.endpoint + 'Question/SetQuestion',
       formData
     );
   }
 
   DeleteVideo(id: number) {
     return this._HttpClient.delete(
-      'https://localhost:7189/VidAdmin/Deletevid?id=' + id
+      environment.endpoint + 'VidAdmin/Deletevid?id=' + id
+    );
+  }
+
+  AddSentence(formData: any) {
+    return this._HttpClient.post(
+      environment.endpoint + 'Sentence/SetSentence',
+      formData
+    );
+  }
+
+  getVideoSentences(id: number) {
+    return this._HttpClient.get(
+      environment.endpoint + 'Sentence/GetSentence?id=' + id
+    );
+  }
+  DeleteQuestion(id: any) {
+    return this._HttpClient.delete(
+      environment.endpoint + 'Question/deleteQuestion?id=' + id
+    );
+  }
+
+  DeleteSentence(id: any) {
+    return this._HttpClient.delete(
+      environment.endpoint + 'Sentence/DeleteSentence?id=' + id
     );
   }
 }

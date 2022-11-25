@@ -77,8 +77,21 @@
         <p appClickStopPropagation (click)="checkSpeakingAnswer()">
           {{ sentence.sentence }}
         </p>
-        <i class="fa-solid fa-microphone"></i>
+        <i class="fa-solid fa-microphone" (click)="startService()"></i>
       </div>
     </ng-container>
   </div>
+  <p>{{text}}</p>
+  <p>{{test}}</p>
+  <button class="btn btn-danger me-3" (click)="startService()">start</button>
+  <button class="btn btn-success" (click)="stop()">stop</button>
+  <div class="d-flex gap-2">
+    <p>
+      <span *ngFor="let word of test;let i = index" [ngClass]="{'text-danger': word != text[i] }">{{text[i] + ' ' }}</span>
+    </p>
+    <i class="fa-solid fa-check text-success" *ngIf="sentenceISCorrect"></i>
+    <i class="fa-solid fa-x text-danger" *ngIf="!sentenceISCorrect && this.text"></i>
+  </div>
+  
+
 </div>

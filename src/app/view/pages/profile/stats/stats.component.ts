@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatsService } from '../providers/states.service';
 
 @Component({
   selector: 'app-stats',
@@ -6,27 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stats.component.scss'],
 })
 export class StatsComponent implements OnInit {
-  stats: any = [
-    {
-      date: '19/07/2022',
-      total: 25,
-      success: 11,
-      fail: 9,
-    },
-    {
-      date: '19/07/2022',
-      total: 25,
-      success: 11,
-      fail: 9,
-    },
-    {
-      date: '19/07/2022',
-      total: 25,
-      success: 11,
-      fail: 9,
-    },
-  ];
-  constructor() {}
+  answeredQuestionsTotal!: number;
+  answeredQuestionsCorrect!: number;
+  answeredQuestionsWrong!: number;
+  constructor(private statsService: StatsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.statsService.GetQuestionAnswersCount(2).subscribe({
+      next: (data: any) => {
+        this.answeredQuestionsTotal = data;
+      },
+    });
+    this.statsService.GetQuestionAnswersCountMistake(2).subscribe({
+      next: (data: any) => {
+        this.answeredQuestionsWrong = data;
+      },
+    });
+    this.statsService.GetQuestionAnswersCountRight(2).subscribe({
+      next: (data: any) => {
+        this.answeredQuestionsCorrect = data;
+      },
+    });
+  }
 }

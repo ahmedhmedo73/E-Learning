@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './view/pages/auth/login/login.component';
 import { RegisterComponent } from './view/pages/auth/register/register.component';
-import { HomeComponent } from './view/pages/home/home.component';
 import { NotfoundComponent } from './view/pages/auth/notfound/notfound.component';
 import { FooterComponent } from './view/layout/footer/footer.component';
 import { NavbarComponent } from './view/layout/navbar/navbar.component';
@@ -18,13 +17,13 @@ import { scoreReducer } from './core/store/reducers/score.reducer';
 import { StarterComponent } from './view/pages/starter/starter.component';
 import { AboutUsComponent } from './view/pages/about-us/about-us.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { OverlayModule } from '@angular/cdk/overlay';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
     NotfoundComponent,
     FooterComponent,
     NavbarComponent,
@@ -41,9 +40,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       score: scoreReducer,
     }),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    OverlayModule,
   ],
-  providers: [],
+  providers: [NzNotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

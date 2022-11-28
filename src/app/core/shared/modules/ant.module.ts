@@ -24,7 +24,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzNotificationModule, NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 @NgModule({
   declarations: [],
@@ -57,6 +57,6 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
     NzNotificationModule,
     NzSliderModule,
   ],
-  providers: [],
+  providers: [NzNotificationService],
 })
 export class AntModule {}

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { environment } from 'src/app/core/environments/environment';
 import { changeScore } from 'src/app/core/store/actions/score.actions';
-import { AdminService } from '../admin/providers/admin.service';
-import { SpeechService } from '../admin/providers/speech.service';
+import { AdminService } from '../../admin/providers/admin.service';
+import { QuizService } from '../providers/quiz.service';
+import { SpeechService } from '../providers/speech.service';
 declare let $: any;
 @Component({
   selector: 'app-home',
@@ -20,23 +22,41 @@ export class HomeComponent implements OnInit {
   questions: any;
   sentences: any;
   URL: string = environment.videoPath;
-  test: any = 'what is your name';
   text: any;
   sentenceISCorrect!: boolean;
+  sentencesAnswer: any[] = [];
+  currentSentence: any;
+  loading: boolean = false;
+  isCorrect: boolean[] = [];
+  isAnswered: number[] = [];
   constructor(
     private store: Store,
     private adminService: AdminService,
-    public speech: SpeechService
+    public speech: SpeechService,
+    private notification: NzNotificationService,
+    private quizService: QuizService
   ) {
     this.speech.init();
   }
 
   ngOnInit(): void {
-    this.adminService.GetVideo(6).subscribe({
+    this.getVideo(6);
+  }
+
+  getVideo(id: number): void {
+    this.adminService.GetVideo(id).subscribe({
       next: (data: any) => {
         this.video = data;
         this.questions = data.questions.$values;
         this.sentences = data.spokenSentences.$values;
+
+        const formData = new FormData();
+        formData.append('IdVideo', this.video.id);
+        formData.append('IdUser', '2');
+        this.quizService.addView(formData).subscribe({
+          next: (data) => {},
+          error: (data) => {},
+        });
       },
     });
   }
@@ -55,9 +75,28 @@ export class HomeComponent implements OnInit {
     this.speakingAnswer = 1;
     this.setScore();
   }
-  checkMcqAnswer(answer: string) {
+  checkMcqAnswer(
+    question: any,
+    answer: string,
+    index: number,
+    answerNumber: number
+  ) {
     this.showQuestion = false;
-    this.mcqAnswer = answer == 'a' ? 1 : 0;
+    this.isCorrect[index] = question.correctAnswer == answerNumber;
+    this.isAnswered[index] = answerNumber;
+
+    this.quizService
+      .answerQuestion({
+        IdQue: question.id,
+        IdUser: 2,
+        CorrectAns: 'sad',
+        UserAns: answer,
+        iscorrect: question.correctAnswer == answerNumber ? 1 : 0,
+      })
+      .subscribe({
+        next: (data) => {},
+        error: (error) => {},
+      });
     this.setScore();
   }
   setScore() {
@@ -74,19 +113,21 @@ export class HomeComponent implements OnInit {
     if (this.mcqAnswer) this.store.dispatch(changeScore({ score: this.score }));
   }
 
-  startService(): void {
+  startService(index: number): void {
     this.speech.text = '';
     this.speech.start();
     this.speech.error = false;
+    this.currentSentence = index;
   }
-  stop(): void {
-    this.text = this.speech.text.trim().split(' ');
-    this.test = this.test.split(' ');
+  stop(index: any): void {
+    this.loading = true;
+    setTimeout(() => {
+      this.sentencesAnswer[index] = this.speech.text.trim();
 
-    this.sentenceISCorrect = this.text.every((el: string, i: number) => {
-      return el == this.test[i];
-    });
-    this.speech.stop();
-    this.speech.error = false;
+      this.speech.stop();
+      this.speech.error = false;
+      this.currentSentence = undefined;
+      this.loading = false;
+    }, 1000);
   }
 }

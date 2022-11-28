@@ -30,7 +30,9 @@ video {
   left: 160px;
   right: 160px;
 }
-.main ,.questions ,.speeking{
+.main,
+.questions,
+.speeking {
   padding: 0px 160px;
 }
 .retry,
@@ -84,7 +86,8 @@ video {
 .mcq {
   position: relative;
 }
-.content,.qustion {
+.content,
+.qustion {
   background: lightgoldenrodyellow;
 }
 .choise {
@@ -148,4 +151,23 @@ video {
       font-size: 70px;
     }
   }
+}
+
+.fa-microphone,
+.fa-circle-stop {
+  cursor: pointer;
+}
+
+.disabledAnswer {
+  pointer-events: none;
+  text-decoration: none;
+  color: black;
+}
+.correctAnswer {
+  background-color: green;
+  color: white;
+}
+.wrongAnswer {
+  background-color: red;
+  color: white;
 }

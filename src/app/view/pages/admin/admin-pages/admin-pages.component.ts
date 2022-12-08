@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { PageLink } from '../../../../core/models/admin-pages';
 
 @Component({
@@ -31,8 +31,10 @@ export class AdminPagesComponent implements OnInit {
   constructor(private router: Router) {
     this.path = this.router.url;
     this.router.events.subscribe((val: any) => {
-      this.path = val.url;
-      this.isVideoPage = this.path.includes('video');
+      if (val instanceof NavigationEnd) {
+        this.path = val.url;
+        this.isVideoPage = this.path.includes('video');
+      }
     });
   }
   ngOnInit(): void {}

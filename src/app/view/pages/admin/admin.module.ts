@@ -9,6 +9,8 @@ import { AdminPagesComponent } from './admin-pages/admin-pages.component';
 import { UsersAccountsComponent } from './users-accounts/users-accounts.component';
 import { VideosComponent } from './videos/videos.component';
 import { QuestionsReportComponent } from './questions-report/questions-report.component';
+import { NgChartsModule } from 'ng2-charts';
+import { QuestionsReportUserComponent } from './questions-report-user/questions-report-user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,13 @@ import { QuestionsReportComponent } from './questions-report/questions-report.co
     UsersAccountsComponent,
     VideosComponent,
     QuestionsReportComponent,
+    QuestionsReportUserComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(AdminRoutes), SharedModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(AdminRoutes),
+    SharedModule,
+    NgChartsModule,
+  ],
 })
 export class AdminModule {}

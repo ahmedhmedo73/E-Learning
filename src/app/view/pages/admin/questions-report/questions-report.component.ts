@@ -2,12 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionAnswersService } from 'src/app/core/services/questions-report/questions-report.service';
 import * as moment from 'moment';
+import { ChartConfiguration } from 'chart.js';
+import { StatsService } from 'src/app/core/services/states/states.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-questions-report',
   templateUrl: './questions-report.component.html',
   styleUrls: ['./questions-report.component.scss'],
 })
 export class QuestionsReportComponent implements OnInit {
+  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data'] = {
+    labels: ['Wrong', 'Correct'],
+    datasets: [{ data: [2, 7] }],
+  };
+
+  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
+    responsive: false,
+  };
+
   form!: FormGroup;
   questionsAnswers: any[] = [];
   moment: any = moment;
@@ -20,32 +32,20 @@ export class QuestionsReportComponent implements OnInit {
     'Is Correct',
     'Answer time',
   ];
-  chartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Project Cost Breakdown',
-    },
-    data: [
-      {
-        type: 'doughnut',
-        yValueFormatString: "#,###.##'%'",
-        indexLabel: '{name}',
-        dataPoints: [
-          { y: 28, name: 'Labour' },
-          { y: 10, name: 'Legal' },
-        ],
-      },
-    ],
-  };
+
+  totalAnswered!: number;
+  totalAnsweredRight!: number;
+  totalAnsweredWrong!: number;
 
   constructor(
     private formBuilder: FormBuilder,
-    private questionAnswersService: QuestionAnswersService
+    private questionAnswersService: QuestionAnswersService,
+    private statsService: StatsService
   ) {}
 
   ngOnInit(): void {
     this.createform();
-    this.getReport();
+    // this.getReport();
   }
 
   createform(): void {
@@ -55,6 +55,7 @@ export class QuestionsReportComponent implements OnInit {
   }
 
   getReport(): void {
+    let id = this.form.get('id')?.value;
     this.questionAnswersService
       .GetQuestionAnswersForUser(this.form.get('id')?.value)
       .subscribe({
@@ -67,5 +68,25 @@ export class QuestionsReportComponent implements OnInit {
           );
         },
       });
+
+    forkJoin({
+      total: this.statsService.GetQuestionAnswersCount(id),
+      right: this.statsService.GetQuestionAnswersCountRight(id),
+      wrong: this.statsService.GetQuestionAnswersCountMistake(id),
+    }).subscribe((data: any) => {
+      this.totalAnswered = data['total'];
+      this.totalAnsweredRight = data['right'];
+      this.totalAnsweredWrong = data['wrong'];
+
+      this.doughnutChartDatasets = {
+        labels: ['Wrong', 'Correct'],
+        datasets: [
+          {
+            data: [this.totalAnsweredWrong, this.totalAnsweredRight],
+            backgroundColor: ['#ff6384', '#36a2eb'],
+          },
+        ],
+      };
+    });
   }
 }

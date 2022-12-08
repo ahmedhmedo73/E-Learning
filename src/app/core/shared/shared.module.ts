@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 //modules
 import { AntModule } from './modules/ant.module';
 import { PrimengModule } from './modules/primeng.module';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [],
   imports: [
@@ -14,6 +15,7 @@ import { PrimengModule } from './modules/primeng.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgChartsModule
   ],
   exports: [
     RouterModule,

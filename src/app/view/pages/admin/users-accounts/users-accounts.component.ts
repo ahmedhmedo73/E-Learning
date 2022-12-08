@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersAccountsService } from 'src/app/core/services/users-accounts/users-accounts.service';
 
 @Component({
@@ -18,7 +19,10 @@ export class UsersAccountsComponent implements OnInit {
     'Gender',
     'Actions',
   ];
-  constructor(private usersAccountsService: UsersAccountsService) {}
+  constructor(
+    private usersAccountsService: UsersAccountsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.get();
@@ -37,5 +41,8 @@ export class UsersAccountsComponent implements OnInit {
         this.get();
       },
     });
+  }
+  viewQuestionsReport(id: any): void {
+    this.router.navigate(['/admin/questions-report-user/' + id]);
   }
 }

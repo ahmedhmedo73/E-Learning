@@ -1,3 +1,7 @@
-<app-navbar></app-navbar>
+<ng-container *ngIf="userGroupID == 1">
+  <app-navbar></app-navbar>
+</ng-container>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<ng-container *ngIf="userGroupID == 1">
+  <app-footer></app-footer>
+</ng-container>

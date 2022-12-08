@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AdminService } from '../providers/admin.service';
+import { AdminService } from '../../../../core/services/admin/admin.service';
 
 @Component({
   selector: 'app-tutorials',

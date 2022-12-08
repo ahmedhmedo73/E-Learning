@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminService } from '../providers/admin.service';
+import { AdminService } from '../../../../core/services/admin/admin.service';
 
 @Component({
   selector: 'app-videos',

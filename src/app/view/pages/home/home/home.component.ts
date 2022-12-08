@@ -3,9 +3,9 @@ import { Store } from '@ngrx/store';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { environment } from 'src/app/core/environments/environment';
 import { changeScore } from 'src/app/core/store/actions/score.actions';
-import { AdminService } from '../../admin/providers/admin.service';
-import { QuizService } from '../providers/quiz.service';
-import { SpeechService } from '../providers/speech.service';
+import { AdminService } from '../../../../core/services/admin/admin.service';
+import { QuizService } from '../../../../core/services/quiz/quiz.service';
+import { SpeechService } from '../../../../core/services/speech/speech.service';
 declare let $: any;
 @Component({
   selector: 'app-home',

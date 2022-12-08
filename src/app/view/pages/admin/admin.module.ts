@@ -8,6 +8,7 @@ import { IndexComponent } from './index/index.component';
 import { AdminPagesComponent } from './admin-pages/admin-pages.component';
 import { UsersAccountsComponent } from './users-accounts/users-accounts.component';
 import { VideosComponent } from './videos/videos.component';
+import { QuestionsReportComponent } from './questions-report/questions-report.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { VideosComponent } from './videos/videos.component';
     AdminPagesComponent,
     UsersAccountsComponent,
     VideosComponent,
+    QuestionsReportComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(AdminRoutes), SharedModule],
 })

@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QuizService } from './../../providers/quiz.service';
+import { QuizService } from '../../../../../core/services/quiz/quiz.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 
